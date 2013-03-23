@@ -27,14 +27,21 @@ var io = require('socket.io').listen(http);
 
 console.log('conectando HTTP server porta 8080');
 
+var usernames = {};
+
 io.sockets.on('connection', function (socket) {
   //servidor conectou com o cliente, envia uma msg de boas vindas
   socket.emit('news', { hello: 'world' });
 
   //evento de envio de msg para o servidor. servidor recebe, envia a msg para o cliente
   socket.on('send', function (data) {
-    socket.emit('receive', data);
+    io.sockets.emit('receive', data, socket.username);
   });  
+
+  socket.on('sendusername', function(username){
+    usernames[socket.id] = username;
+    socket.username = username; 
+  })
 
 });
 

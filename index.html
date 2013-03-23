@@ -8,14 +8,20 @@
     <script>
         var socket = io.connect('http://127.0.0.1:8080');
 
+        socket.on('connect', function(){
+            var username = prompt('Insira seu nickname');
+
+            socket.emit('sendusername', username);
+        })
+
         socket.on('news', function(data){
             var p = document.createElement('p');
             p.innerHTML = data.hello;
             document.body.appendChild(p);
         })
 
-        socket.on('receive', function(data){
-            $('.text').append('<p>Mensagem: '+ data +'</p>');
+        socket.on('receive', function(data, username){
+            $('.text').append('<p>'+ username +': '+ data +'</p>');
         })
     </script>
 
