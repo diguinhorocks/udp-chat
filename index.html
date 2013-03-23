@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        var socket = io.connect('http://127.0.0.1:8080');
+
+        socket.on('news', function(data){
+            var p = document.createElement('p');
+            p.innerHTML = data.hello;
+            document.body.appendChild(p);
+        })
+
+        socket.on('receive', function(data){
+            $('.text').append('<p>Mensagem: '+ data +'</p>');
+        })
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#send').click(function(){
+                socket.emit('send', $('#msg').val());
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="msg" />
+    <button type="submit" id="send">Send</button>
+    <div class="text">
+      
+    </div>
+</body>
+</html>
