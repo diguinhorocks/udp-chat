@@ -1,5 +1,7 @@
 {
     "name": "udp-chat",
+    "author": "r.santiago <rsantiago897@gmail.com>",
+    "description": "a simple http2udp server",
     "scripts": { 
         "start": "node app.js" 
     }
