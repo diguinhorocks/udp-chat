@@ -1,5 +1,5 @@
 {
-    "name": "UDP Chat",
+    "name": "udp-chat",
     "scripts": { 
         "start": "node app.js" 
     }
