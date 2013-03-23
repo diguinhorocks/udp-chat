@@ -1,6 +1,6 @@
 {
-    "name": "UDP Chat"
+    "name": "UDP Chat",
     "scripts": { 
-        "start": "node app.js --websocket-port=8000 --log-level=1" 
+        "start": "node app.js" 
     }
 }
