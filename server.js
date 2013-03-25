@@ -27,6 +27,13 @@ http.listen(8080);
 var server = dgram.createSocket("udp4");
 
 server.on("message", function (msg, rinfo) {
+
+  if(msg == 'Lteste') {
+    var ola = new Buffer("Ochicotripa");
+    server.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes){
+
+    })
+  }
   console.log("server got: " + msg + " from " +
     rinfo.address + ":" + rinfo.port);
 });
@@ -57,7 +64,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('send', function (data) {
     io.sockets.emit('receive', data, socket.username);
     var message = new Buffer(data);
-    server.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+    server.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
 
     })
   });  
@@ -66,6 +73,10 @@ io.sockets.on('connection', function (socket) {
     usernames[socket.id] = username;
     socket.username = username; 
     io.sockets.emit('userlist', usernames);
+    var message = new Buffer(username);
+    server.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+
+    })
   })
 
   socket.on('disconnect', function(){
