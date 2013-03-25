@@ -5,49 +5,53 @@
     <title>Document</title>
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script>
-        var socket = io.connect('http://192.168.2.102:8080');
+        var socket = io.connect('http://127.0.0.1:8080');
 
         socket.on('connect', function(){
-            var username = prompt('Insira seu nickname');
+          var username = prompt('Insira seu nickname');
 
-            socket.emit('sendusername', username);
+          socket.emit('sendusername', username);
         })
 
         socket.on('news', function(data){
-            var p = document.createElement('p');
-            p.innerHTML = data.hello;
-            document.body.appendChild(p);
+          var p = document.createElement('p');
+          p.innerHTML = data.hello;
+          document.body.appendChild(p);
         })
 
         socket.on('receive', function(data, username){
-            $('.text').append('<p>'+ username +': '+ data +'</p>');
+          $('.text').append('<p>'+ username +': '+ data +'</p>');
         })
 
         socket.on('userlist', function(list){
+          $('.users').empty();
 
-            $('.users').empty();
-
-            $.each(list, function(i, user){
-                $('.users').append('<a href="#">' + user + '</a>');
-            })
+          $.each(list, function(i, user){
+            $('.users').append('<a href="#">' + user + '</a>');
+          })
         })
+
     </script>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#send').click(function(){
-                socket.emit('send', $('#msg').val());
-            });
+          $('#send').click(function(){
+            socket.emit('send', $('#msg').val());
+          });
         });
     </script>
 </head>
+
 <body>
-    <input type="text" id="msg" />
-    <button type="submit" id="send">Send</button>
-    <div class="users"></div>
-    <div class="text">
-      
-    </div>
+  <input type="text" id="msg" />
+
+  <button type="submit" id="send">Send</button>
+
+  <div class="users"></div>
+
+  <div class="text"></div>
 </body>
+
 </html>
