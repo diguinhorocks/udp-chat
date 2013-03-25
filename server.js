@@ -25,11 +25,13 @@ http.listen(8080);
 //criando UDP server
 
 var server = dgram.createSocket("udp4");
+var updnames = {};
 
 server.on("message", function (msg, rinfo) {
+  udpnames[msg] = msg;
 
-  if(msg == 'Lteste') {
-    var ola = new Buffer("Ochicotripa");
+  if(msg == 'L' + msg) {
+    var ola = new Buffer('O' + msg);
     server.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes){
 
     })
@@ -49,7 +51,7 @@ server.bind(9874);
 
 
 // incluindo socket io para manipular eventos assincronos com o server
-var io = require('socket.io').listen(http); 
+var io = require('socket.io').listen(http);
 
 console.log('conectando HTTP server porta 8080');
 
@@ -58,7 +60,7 @@ var usernames = {};
 io.sockets.on('connection', function (socket) {
   //servidor conectou com o cliente, envia uma msg de boas vindas
   socket.emit('news', { hello: 'world' });
-  
+
 
   //evento de envio de msg para o servidor. servidor recebe, envia a msg para o cliente
   socket.on('send', function (data) {
@@ -67,11 +69,11 @@ io.sockets.on('connection', function (socket) {
     server.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
 
     })
-  });  
+  });
 
   socket.on('sendusername', function(username){
     usernames[socket.id] = username;
-    socket.username = username; 
+    socket.username = username;
     io.sockets.emit('userlist', usernames);
     var message = new Buffer(username);
     server.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
