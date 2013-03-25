@@ -25,7 +25,7 @@ http.listen(8080);
 //criando UDP server
 
 var server = dgram.createSocket("udp4");
-var updnames = {};
+var udpnames = {};
 
 server.on("message", function (msg, rinfo) {
   udpnames[msg] = msg;
