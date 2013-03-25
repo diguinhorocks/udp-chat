@@ -22,6 +22,25 @@ var http = require('http').createServer(function(req, res){
 
 http.listen(8080);
 
+//criando UDP server
+
+var server = dgram.createSocket("udp4");
+
+server.on("message", function (msg, rinfo) {
+  console.log("server got: " + msg + " from " +
+    rinfo.address + ":" + rinfo.port);
+});
+
+server.on("listening", function () {
+  var address = server.address();
+  console.log("server listening " +
+      address.address + ":" + address.port);
+});
+
+server.bind(9874);
+
+
+
 // incluindo socket io para manipular eventos assincronos com o server
 var io = require('socket.io').listen(http); 
 
@@ -37,6 +56,10 @@ io.sockets.on('connection', function (socket) {
   //evento de envio de msg para o servidor. servidor recebe, envia a msg para o cliente
   socket.on('send', function (data) {
     io.sockets.emit('receive', data, socket.username);
+    var message = new Buffer(data);
+    server.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+
+    })
   });  
 
   socket.on('sendusername', function(username){
@@ -56,19 +79,3 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-//criando UDP server
-
-var server = dgram.createSocket("udp4");
-
-server.on("message", function (msg, rinfo) {
-  console.log("server got: " + msg + " from " +
-    rinfo.address + ":" + rinfo.port);
-});
-
-server.on("listening", function () {
-  var address = server.address();
-  console.log("server listening " +
-      address.address + ":" + address.port);
-});
-
-server.bind(9874);
