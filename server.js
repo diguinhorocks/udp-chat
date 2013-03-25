@@ -32,6 +32,7 @@ var usernames = {};
 io.sockets.on('connection', function (socket) {
   //servidor conectou com o cliente, envia uma msg de boas vindas
   socket.emit('news', { hello: 'world' });
+  
 
   //evento de envio de msg para o servidor. servidor recebe, envia a msg para o cliente
   socket.on('send', function (data) {
@@ -41,7 +42,17 @@ io.sockets.on('connection', function (socket) {
   socket.on('sendusername', function(username){
     usernames[socket.id] = username;
     socket.username = username; 
+    io.sockets.emit('userlist', usernames);
   })
+
+  socket.on('disconnect', function(){
+      // remove the username from global usernames list
+      delete usernames[socket.id];
+      // update list of users in chat, client-side
+      io.sockets.emit('userlist', usernames);
+
+  });
+
 
 });
 
