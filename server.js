@@ -1,7 +1,6 @@
 var dgram = require("dgram"); // incluindo modulo de datagrama (protocolo UDP)
 var fs = require('fs');
 
-
 //criando HTTP server
 var http = require('http').createServer(function(req, res){
     res.writeHead(200, {"Content-Type": "text/html"});
@@ -9,15 +8,14 @@ var http = require('http').createServer(function(req, res){
         __dirname + '/client.html',
         function (err, data) {
             if (err) {
-                res.writeHead(500);
-                return res.end('Error loading index.html');
+              res.writeHead(500);
+              return res.end('Error loading index.html');
             }
 
             res.writeHead(200);
             res.end(data);
         }
     );
-
 })
 
 http.listen(8080);
@@ -48,8 +46,6 @@ server.on("listening", function () {
 
 server.bind(9874);
 
-
-
 // incluindo socket io para manipular eventos assincronos com o server
 var io = require('socket.io').listen(http);
 
@@ -58,9 +54,6 @@ console.log('conectando HTTP server porta 8080');
 var usernames = {};
 
 io.sockets.on('connection', function (socket) {
-  //servidor conectou com o cliente, envia uma msg de boas vindas
-  socket.emit('news', { hello: 'world' });
-
 
   //evento de envio de msg para o servidor. servidor recebe, envia a msg para o cliente
   socket.on('send', function (data) {
@@ -76,19 +69,17 @@ io.sockets.on('connection', function (socket) {
     socket.username = username;
     io.sockets.emit('userlist', usernames);
     var message = new Buffer(username);
-    server.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+    server.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
 
     })
   })
 
   socket.on('disconnect', function(){
-      // remove the username from global usernames list
-      delete usernames[socket.id];
-      // update list of users in chat, client-side
-      io.sockets.emit('userlist', usernames);
-
+    // remove the username from global usernames list
+    delete usernames[socket.id];
+    // update list of users in chat, client-side
+    io.sockets.emit('userlist', usernames);
   });
-
 
 });
 
