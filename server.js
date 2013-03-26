@@ -3,25 +3,23 @@ var fs = require('fs');
 
 //criando HTTP server
 var http = require('http').createServer(function(req, res){
-    res.writeHead(200, {"Content-Type": "text/html"});
-    fs.readFile(
-        __dirname + '/client.html',
-        function (err, data) {
-            if (err) {
-              res.writeHead(500);
-              return res.end('Error loading index.html');
-            }
+  res.writeHead(200, {"Content-Type": "text/html"});
+  fs.readFile(
+    __dirname + '/client.html', function (err, data) {
+      if (err) {
+        res.writeHead(500);
+        return res.end('Error loading index.html');
+      }
 
-            res.writeHead(200);
-            res.end(data);
-        }
-    );
+      res.writeHead(200);
+      res.end(data);
+    }
+  );
 })
 
 http.listen(8080);
 
 //criando UDP server
-
 var server = dgram.createSocket("udp4");
 var udpnames = {};
 
