@@ -15,12 +15,6 @@
           socket.emit('sendusername', username);
         })
 
-        socket.on('news', function(data){
-          var p = document.createElement('p');
-          p.innerHTML = data.hello;
-          document.body.appendChild(p);
-        })
-
         socket.on('receive', function(data, username){
           $('.text').append('<p>'+ username +': '+ data +'</p>');
         })
