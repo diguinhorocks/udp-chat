@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Node.chat</title>
+
+    <style type="text/css">
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      h1 {
+        font-size: 40px;
+        color: rgba(0, 0, 0, .8);
+      }
+    </style>
+
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -39,13 +51,15 @@
 </head>
 
 <body>
-  <input type="text" id="msg" />
-
-  <button type="submit" id="send">Send</button>
+  <h1>Chat.node</h1>
 
   <div class="users"></div>
 
   <div class="text"></div>
+
+  <input type="text" id="msg" />
+
+  <button type="submit" id="send">Enviar</button>
 </body>
 
 </html>
