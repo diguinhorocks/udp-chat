@@ -40,7 +40,7 @@ server.on("message", function (msg, rinfo) {
   if(flag == 'L') 
   {
     console.log('endereco do cara: '+rinfo.address);
-    var ola = new Buffer('O' + msg.toString().substr(1));
+    var ola = new Buffer('O' + myUser);
     udpnames[msg.toString().substr(1)] = msg.toString().substr(1);
 
     client.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes) {} )
@@ -94,6 +94,7 @@ io.sockets.on('connection', function (socket) {
     usernames[socket.id] = username;
     socket.username = username;
     io.sockets.emit('userlist', usernames);
+    myUser = username;
     var message = new Buffer('L' + username);
     client.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
       console.log('ERRO: '+ err);
