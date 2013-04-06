@@ -51,6 +51,8 @@ server.on("message", function (msg, rinfo) {
   {
     delete udpnames[msg.toString().substr(1)];
     console.log('UDP LIST: '+JSON.stringify(udpnames));
+    var saiu = new Buffer('F' + msg.toString().substr(1));
+    client.send(saiu, 0, saiu.length, 9874, "255.255.255.255", function(err, bytes) {} )
   }
 
   console.log("SERVER GOT: " + msg + " from " +
