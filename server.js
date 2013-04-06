@@ -17,24 +17,15 @@ var http = require('http').createServer(function(req, res){
   );
 })
 
-http.listen(8080);
+
 
 //criando UDP server
 var server = dgram.createSocket("udp4");
+var client = dgram.createSocket("udp4");
 var udpnames = {};
+var myuser = null;
+var scope = "255.255.255.255";
 
-server.on("message", function (msg, rinfo) {
-  udpnames[msg] = msg;
-
-  if(msg == 'L' + msg) {
-    var ola = new Buffer('O' + msg);
-    server.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes){
-
-    })
-  }
-  console.log("server got: " + msg + " from " +
-    rinfo.address + ":" + rinfo.port);
-});
 
 server.on("listening", function () {
   var address = server.address();
@@ -42,7 +33,35 @@ server.on("listening", function () {
       address.address + ":" + address.port);
 });
 
+server.on("message", function (msg, rinfo) {
+  
+  var flag = msg.toString().substr(0, 1);
+
+  if(flag == 'L') 
+  {
+    console.log('endereco do cara: '+rinfo.address);
+    var ola = new Buffer('O' + msg.toString().substr(1));
+    udpnames[msg.toString().substr(1)] = msg.toString().substr(1);
+
+    client.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes) {} )
+    console.log('UDP LIST: '+JSON.stringify(udpnames));
+  }
+
+  if(flag == 'F') 
+  {
+    delete udpnames[msg.toString().substr(1)];
+    console.log('UDP LIST: '+JSON.stringify(udpnames));
+  }
+
+  console.log("SERVER GOT: " + msg + " from " +
+    rinfo.address + ":" + rinfo.port);
+});
+
+
 server.bind(9874);
+
+http.listen(8080);
+
 
 // incluindo socket io para manipular eventos assincronos com o server
 var io = require('socket.io').listen(http);
@@ -57,8 +76,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('send', function (data) {
     io.sockets.emit('receive', data, socket.username);
     var message = new Buffer(data);
-    server.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
-
+    client.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
+      console.log('ERRO: '+ err);
     })
   });
 
@@ -66,9 +85,9 @@ io.sockets.on('connection', function (socket) {
     usernames[socket.id] = username;
     socket.username = username;
     io.sockets.emit('userlist', usernames);
-    var message = new Buffer(username);
-    server.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
-
+    var message = new Buffer('L' + username);
+    client.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+      console.log('ERRO: '+ err);
     })
   })
 
@@ -77,6 +96,12 @@ io.sockets.on('connection', function (socket) {
     delete usernames[socket.id];
     // update list of users in chat, client-side
     io.sockets.emit('userlist', usernames);
+
+    var flag = new Buffer('F'+ socket.username);
+
+    server.send(flag, 0, flag.length, 9874, "255.255.255.255", function(err, bytes){
+      console.log('ERRO: '+ err);
+    })
   });
 
 });
