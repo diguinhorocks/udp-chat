@@ -47,6 +47,13 @@ server.on("message", function (msg, rinfo) {
     console.log('UDP LIST: '+JSON.stringify(udpnames));
   }
 
+  if(flag == 'O') 
+  {
+    console.log('endereco do cara: '+rinfo.address);
+    udpnames[msg.toString().substr(1)] = msg.toString().substr(1);
+    console.log('UDP LIST: '+JSON.stringify(udpnames));
+  }
+
   if(flag == 'F') 
   {
     delete udpnames[msg.toString().substr(1)];
