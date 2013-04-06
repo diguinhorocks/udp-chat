@@ -23,8 +23,9 @@ var http = require('http').createServer(function(req, res){
 var server = dgram.createSocket("udp4");
 var client = dgram.createSocket("udp4");
 var udpnames = {};
+var usernames = {};
 var myuser = null;
-var scope = "255.255.255.255";
+var scope = "localhost";
 
 
 server.on("listening", function () {
@@ -42,7 +43,7 @@ server.on("message", function (msg, rinfo) {
     console.log('endereco do cara: '+rinfo.address);
     var ola = new Buffer('O' + myUser);
     udpnames[msg.toString().substr(1)] = msg.toString().substr(1);
-
+    usernames[msg.toString().substr(1)] = msg.toString().substr(1);
     client.send(ola, 0, ola.length, 9874, rinfo.address, function(err, bytes) {} )
     console.log('UDP LIST: '+JSON.stringify(udpnames));
   }
@@ -59,7 +60,7 @@ server.on("message", function (msg, rinfo) {
     delete udpnames[msg.toString().substr(1)];
     console.log('UDP LIST: '+JSON.stringify(udpnames));
     var saiu = new Buffer('F' + msg.toString().substr(1));
-    client.send(saiu, 0, saiu.length, 9874, "255.255.255.255", function(err, bytes) {} )
+    client.send(saiu, 0, saiu.length, 9874, scope, function(err, bytes) {} )
   }
 
   console.log("SERVER GOT: " + msg + " from " +
@@ -77,7 +78,6 @@ var io = require('socket.io').listen(http);
 
 console.log('conectando HTTP server porta 8080');
 
-var usernames = {};
 
 io.sockets.on('connection', function (socket) {
 
@@ -85,18 +85,19 @@ io.sockets.on('connection', function (socket) {
   socket.on('send', function (data) {
     io.sockets.emit('receive', data, socket.username);
     var message = new Buffer(data);
-    client.send(message, 0, message.length, 9874, "255.255.255.255", function(err, bytes){
+    client.send(message, 0, message.length, 9874, scope, function(err, bytes){
       console.log('ERRO: '+ err);
     })
   });
 
   socket.on('sendusername', function(username){
     usernames[socket.id] = username;
+    udpnames[username] = username;
     socket.username = username;
     io.sockets.emit('userlist', usernames);
     myUser = username;
     var message = new Buffer('L' + username);
-    client.send(message, 0, message.length, 9874, "localhost", function(err, bytes){
+    client.send(message, 0, message.length, 9874, scope, function(err, bytes){
       console.log('ERRO: '+ err);
     })
   })
@@ -109,7 +110,7 @@ io.sockets.on('connection', function (socket) {
 
     var flag = new Buffer('F'+ socket.username);
 
-    server.send(flag, 0, flag.length, 9874, "255.255.255.255", function(err, bytes){
+    server.send(flag, 0, flag.length, 9874, scope, function(err, bytes){
       console.log('ERRO: '+ err);
     })
   });
