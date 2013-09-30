@@ -10,5 +10,5 @@ var app = module.parent.exports.app
  * Homepage
  */
 app.get('/', function(req, res) {
-  res.sendfile(path.resolve(__dirname + '/../views/client.html'))
+  res.render('client')
 });

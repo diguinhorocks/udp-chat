@@ -7,8 +7,12 @@ var app = exports.app = require('express')()
   , client = dgram.createSocket('udp4')
 
 app.configure(function(){
+  //definindo o template engine
+  app.engine('html', require('ejs').renderFile);
+  //escolhendo o template previamente definido
+  app.set('view engine', 'html'); 
   //setando o path das views
-  app.set('views', __dirname + 'views');
+  app.set('views', __dirname + '/views');
   //setando o path dos assets
   app.use(express.static(__dirname + '/public'));
   //definição das routes
