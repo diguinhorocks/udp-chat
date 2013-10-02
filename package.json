@@ -23,10 +23,12 @@
     "ejs": "0.8.x"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "vows tests/* --spec"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "vows": ">=0.7.0"
+    "vows": ">=0.7.0", 
+    "api-easy": ">=0.3.8"
   }
 }
