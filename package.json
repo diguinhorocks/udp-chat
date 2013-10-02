@@ -1,7 +1,7 @@
 {
   "name": "udp-chat",
   "author": "r.santiago <rsantiago897@gmail.com>, renan c. <email@test.com>",
-  "description": "a simple http2udp server ",
+  "description": "a simple http2udp server",
   "version": "0.0.1",
   "contributors": [
     {
@@ -26,6 +26,7 @@
     "start": "node app.js"
   },
   "devDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "vows": ">=0.7.0"
   }
 }
