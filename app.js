@@ -17,7 +17,6 @@ app.use(app.router);
 /*
 * app routes
 */
-
 app.get('/', index.main);
 
 /*
