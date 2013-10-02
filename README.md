@@ -3,6 +3,21 @@ udp-chat [![Build Status](https://travis-ci.org/diguinhorocks/udp-chat.png?branc
 
 chat written on udp protocol (node.js) and tcp (http)
 
+installation
+===
+
+assuming you have nodejs installed on your machine, just type the following
+
+```bash
+    npm install
+```
+
+and then 
+
+```bash
+    npm start
+```
+
 to-do
 ===
 - tests
