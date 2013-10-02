@@ -6,18 +6,18 @@ var app = exports.app = require('express')()
   , udpserver = dgram.createSocket('udp4')
   , client = dgram.createSocket('udp4')
 
-app.configure(function(){
-  //definindo o template engine
-  app.engine('html', require('ejs').renderFile);
-  //escolhendo o template previamente definido
-  app.set('view engine', 'html'); 
-  //setando o path das views
-  app.set('views', __dirname + '/views');
-  //setando o path dos assets
-  app.use(express.static(__dirname + '/public'));
-  //definição das routes
-  app.use(app.router);
-})
+
+//definindo o template engine
+app.engine('html', require('ejs').renderFile);
+//escolhendo o template previamente definido
+app.set('view engine', 'html'); 
+//setando o path das views
+app.set('views', __dirname + '/views');
+//setando o path dos assets
+app.use(express.static(__dirname + '/public'));
+//definição das routes
+app.use(app.router);
+
 
 /*
 * app routes
@@ -33,7 +33,7 @@ udpserver.on("listening", function () {
   var address = udpserver.address();
   console.log("server listening " +
       address.address + ":" + address.port);
-})
+}).bind(9874);
 
 udpserver.on("message", function (msg, rinfo) {
   // more stuff here 
