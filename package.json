@@ -18,9 +18,9 @@
     "url": "https://github.com/diguinhorocks/udp-chat.git"
   },
   "dependencies": {
-    "express": ">= 3.x",
+    "express": "3.x",
     "socket.io": ">=0.9.7",
-    "ejs": ">= 0.8.x"
+    "ejs": "0.8.x"
   },
   "scripts": {
     "start": "node app.js"
