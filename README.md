@@ -6,7 +6,7 @@ chat written on udp protocol (node.js) and tcp (http)
 installation
 ===
 
-assuming you have nodejs installed on your machine, just type the following
+assuming you have nodejs installed on your machine, in your terminal just type the following
 
 ```bash
     npm install
