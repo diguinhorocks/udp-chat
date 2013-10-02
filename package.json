@@ -1,7 +1,7 @@
 {
   "name": "udp-chat",
   "author": "r.santiago <rsantiago897@gmail.com>, renan c. <email@test.com>",
-  "description": "a simple http2udp server",
+  "description": "a simple http2udp server ",
   "version": "0.0.1",
   "contributors": [
     {
@@ -18,9 +18,9 @@
     "url": "https://github.com/diguinhorocks/udp-chat.git"
   },
   "dependencies": {
-    "express": ">=3.*",
+    "express": ">= 3.x",
     "socket.io": ">=0.9.7",
-    "ejs": ">=0.8.*"
+    "ejs": ">= 0.8.x"
   },
   "scripts": {
     "start": "node app.js"
