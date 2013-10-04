@@ -20,11 +20,12 @@
   "dependencies": {
     "express": "3.x",
     "socket.io": ">=0.9.7",
-    "ejs": "0.8.x"
+    "ejs": "0.8.x",
+    "passport": ">=0.1.17"
   },
   "scripts": {
     "start": "node app.js",
-    "test": "vows tests/* --spec"
+    "test": "vows test/* --spec"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
