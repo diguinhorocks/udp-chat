@@ -1,0 +1,26 @@
+{
+  "auth": {
+    "twitter": {
+      "consumerkey" : "5VM4dFtQmzatfbZw6G9Tg",
+      "consumersecret" : "LkXf3RRLiMtS2tHXxqXETnWTGGZleglWGXUItaUO4w",
+      "callback" : "http://127.0.0.1:8080/auth/twitter/callback"
+    },
+    "facebook": {
+      "clientid" : "yourClientID",
+      "clientsecret" : "yourClientSecret",
+      "callback" : "http://127.0.0.1:6789/auth/facebook/callback"
+    }
+  },
+  "session" : {
+    "secret" : "fuabfhdafbdkfhda"
+  },
+  "app": {
+    "port": 8080
+  },
+  "udp": {
+
+  },
+  "tcp": {
+
+  }
+}
