@@ -21,7 +21,9 @@
     "express": "3.x",
     "socket.io": ">=0.9.7",
     "ejs": "0.8.x",
-    "passport": ">=0.1.17"
+    "passport": ">=0.1.17",
+    "passport-twitter": ">=1.0.2",
+    "passport-facebook": ">=1.0.1"
   },
   "scripts": {
     "start": "node app.js",
