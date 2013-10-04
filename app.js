@@ -22,8 +22,8 @@ app.get('/', index.main);
 /*
 * server
 */ 
-require('./server');
+require('./lib/server');
 
 
 // incluindo socket io para manipular eventos assincronos com o server
-require('./sockets')
+require('./lib/sockets')
