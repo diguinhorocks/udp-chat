@@ -1,9 +1,12 @@
-var app = exports.app = require('express')()
-  , express = require('express')
-  , passport = require('passport')
-  , config = require('./config.json')
-  , store = new express.session.MemoryStore;
+ var  express = require('express')
+	, namespace = require('express-namespace')
+	, routes = require('./routes')
+	, passport = require('passport')
+	, config = require('./config.json')
+	, store = new express.session.MemoryStore;
 
+
+var app = exports.app = express();
 /*
 * Auth Strategy
 */
@@ -31,16 +34,12 @@ app.use(passport.session());
 //routing
 app.use(app.router);
 
-var index = require('./routes/index');
 /*
 * app routes
 */
-app.get('/', index.main);
-app.get('/login', index.login);
-
+routes.configure(app);
 
 /*
 * server
 */ 
 require('./lib/server');
-
