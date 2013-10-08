@@ -5,12 +5,7 @@ var vows = require('vows')
 
 var suite = api.describe('app routing');
 
-//
-// Add some discussion around the vowsjs tests.
-// Not familiar with vows? Checkout:
-// http://vowsjs.org 
-//
-suite.discuss('When using the API')
+suite.discuss('When using the Application')
      .discuss('the Ping resource')
 
 suite.use('localhost', 8080).setHeader('Content-Type', 'text/html');
@@ -19,6 +14,12 @@ suite.use('localhost', 8080).setHeader('Content-Type', 'text/html');
 // and to always send 'Content-Type': 'text/html'
 //
 suite
-     .get('/')
-       .expect(200)
-       	.export(module)
+    .get('/')
+    	.expect(200)
+    .get('/auth/twitter')
+    	.expect(200)
+    .get('/auth/facebook')
+    	.expect(200)
+    .get('/login')
+    	.expect(200)
+	.export(module)
